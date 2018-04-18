@@ -1,0 +1,47 @@
+Microsoft (R) Macro Assembler Version 5.10                  4/9/18 11:10:50
+
+                                                             Page     1-1
+
+
+				PUBLIC	PR_NullFunc
+				
+ 0000				Code	SEGMENT	PUBLIC
+					ASSUME CS:Code
+				
+ 0000				PR_NullFunc	PROC	NEAR
+ 0000  C3				RET
+ 0001				PR_NullFunc	ENDP
+				
+ 0001				Code	ENDS
+				
+				END
+Microsoft (R) Macro Assembler Version 5.10                  4/9/18 11:10:50
+
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+CODE . . . . . . . . . . . . . .  	0001	PARA	PUBLIC	
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+PR_NULLFUNC  . . . . . . . . . .  	N PROC	0000	CODE	Global	Length = 0001
+
+@CPU . . . . . . . . . . . . . .  	TEXT  0101h		
+@FILENAME  . . . . . . . . . . .  	TEXT  _null		
+@VERSION . . . . . . . . . . . .  	TEXT  510		
+
+
+     12 Source  Lines
+     12 Total   Lines
+     11 Symbols
+
+  46776 + 446308 Bytes symbol space free
+
+      0 Warning Errors
+      0 Severe  Errors

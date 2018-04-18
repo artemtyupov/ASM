@@ -1,0 +1,200 @@
+Microsoft (R) Macro Assembler Version 5.10                  4/9/18 11:10:48
+
+                                                             Page     1-1
+
+
+				EXTRN	PR_PrintMenu:NEAR
+				EXTRN	PR_InputInt:NEAR
+				;EXTRN	PR_Out2:NEAR
+				;EXTRN	PR_Out2S:NEAR
+				;EXTRN	PR_Out10:NEAR
+				;EXTRN	PR_Out10S:NEAR
+				;EXTRN	PR_Out16:NEAR
+				;EXTRN	PR_Out16S:NEAR
+				EXTRN	PR_NullFunc:NEAR
+				PUBLIC	PR_NewLine, sEnter
+				
+				
+ 0000				Data	SEGMENT	PUBLIC
+ 0000  0000 E 0000 E 0000 E		Funcs		DW	PR_PrintMenu, P
+				R_InputInt, PR_NullFunc, PR_NullFunc, PR_NullFu
+				nc, PR_NullFunc, PR_NullFunc, PR_NullFunc;, PR_
+				Out2, PR_Out2S, PR_Out10, PR_Out10S, PR_Out16, 
+				PR_Out16s
+       0000 E 0000 E 0000 E	
+       0000 E 0000 E		
+ 0010  0008				X			DW	8
+ 0012  3E 20 24				sEnter		DB	'> ', '$'
+ 0015				Data	ENDS
+				
+				
+				
+				
+				
+ 0000				Code	SEGMENT	PUBLIC
+					ASSUME CS:Code, DS:Data, SS:Stack
+					
+ 0000				PR_NewLine	PROC	NEAR
+ 0000  50				PUSH	AX
+ 0001  52				PUSH	DX
+					
+ 0002  B4 02				MOV		AH,2
+ 0004  B2 0A				MOV		DL,10
+ 0006  CD 21				INT		21h
+ 0008  B2 0D				MOV		DL,13
+ 000A  CD 21				INT		21h
+					
+ 000C  5A				POP		DX
+ 000D  58				POP		AX
+ 000E  C3				RET
+ 000F				PR_NewLine	ENDP
+				
+				
+				
+				
+ 000F				START:
+ 000F  B8 ---- R			MOV		AX,Data
+ 0012  8E D8				MOV		DS,AX
+					
+ 0014  FF 16 0000 R			CALL	Funcs	;печатаем меню при запу
+Microsoft (R) Macro Assembler Version 5.10                  4/9/18 11:10:48
+
+                                                             Page     1-2
+
+
+				ске
+					
+ 0018					LEnter_Loop:
+						;CALL	PR_NewLine	;печата
+				ем приглашение
+ 0018  E8 0000 R				CALL	PR_NewLine	;печата
+				ем приглашение
+ 001B  B4 09					MOV		AH,9
+ 001D  8D 16 0012 R				LEA		DX,sEnter
+ 0021  CD 21					INT		21h
+						
+						
+ 0023  B4 08					MOV		AH,8	
+					;ввод символа без эха
+ 0025  CD 21					INT		21h
+ 0027  3C 38					CMP		AL,'8'
+ 0029  77 ED					JA		LEnter_Loop
+					;требуем ввести цифру, если >8!
+ 002B  3C 30					CMP		AL,'0'
+ 002D  72 E9					JB		LEnter_Loop
+					;требуем ввести цифру, если <0!
+ 002F  B4 02					MOV		AH,2	
+					;печатаем введенную цифру
+ 0031  8A D0					MOV		DL,AL
+ 0033  CD 21					INT		21h
+ 0035  E8 0000 R				CALL	PR_NewLine
+						
+ 0038  8A D8					MOV		BL,AL
+ 003A  80 EB 30					SUB		BL,'0'
+						
+ 003D  80 FB 08					CMP		BL,8	;смотри
+				м, какую цифру ввёл юзер
+ 0040  74 23					JE		LEnd	;если 8
+				 - то абандон тред
+						
+ 0042  02 DB					ADD		BL,BL	; удваи
+				ваем цифру, потому что адрес двухбайтовый
+ 0044  B7 00					MOV		BH,0
+						
+ 0046  80 FB 02					CMP		BL,2	
+					;если юзер запросил печать Х, то переда
+				дим Х через стек в функцию
+ 0049  76 04					JBE		LSkip_Push
+ 004B  FF 36 0010 R					PUSH	X
+ 004F						LSkip_Push:
+						
+ 004F  FF 97 0000 R				CALL	Funcs[BX]	;вызыва
+				ем нужную функцию из массива
+						
+ 0053  80 FB 02					CMP		BL,2	
+					;если юзер запрашивал печать Х, то почи
+				стим стек
+ 0056  76 03					JBE		LSkip_Pop
+ 0058  83 C4 02						ADD		SP,2
+Microsoft (R) Macro Assembler Version 5.10                  4/9/18 11:10:48
+
+                                                             Page     1-3
+
+
+ 005B						LSkip_Pop:
+						
+ 005B  80 FB 02					CMP		BL,2	
+					;если юзер вводил число
+ 005E  75 B8					JNE		LEnter_Loop
+					;то загрузим это число в память
+ 0060  A3 0010 R					MOV		X,AX
+						
+						
+ 0063  EB B3				JMP		LEnter_Loop
+					
+					; выход ~~~~~~~~~~~~~~~~~~
+ 0065					LEnd:
+ 0065  B4 4C				MOV		AH,4Ch
+ 0067  B0 00				MOV		AL,0
+ 0069  CD 21				INT		21h
+				
+ 006B				Code	ENDS
+				
+				
+				
+				
+ 0000				Stack	SEGMENT STACK
+ 0000  0128[				DW	128h DUP (?)
+	   ????			
+			 ]	
+				
+ 0250				Stack	ENDS
+				
+					END START
+Microsoft (R) Macro Assembler Version 5.10                  4/9/18 11:10:48
+
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+CODE . . . . . . . . . . . . . .  	006B	PARA	PUBLIC	
+DATA . . . . . . . . . . . . . .  	0015	PARA	PUBLIC	
+STACK  . . . . . . . . . . . . .  	0250	PARA	STACK	
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+FUNCS  . . . . . . . . . . . . .  	L 0002	0000	DATA
+
+LEND . . . . . . . . . . . . . .  	L NEAR	0065	CODE
+LENTER_LOOP  . . . . . . . . . .  	L NEAR	0018	CODE
+LSKIP_POP  . . . . . . . . . . .  	L NEAR	005B	CODE
+LSKIP_PUSH . . . . . . . . . . .  	L NEAR	004F	CODE
+
+PR_INPUTINT  . . . . . . . . . .  	L NEAR	0000		External
+PR_NEWLINE . . . . . . . . . . .  	N PROC	0000	CODE	Global	Length = 000F
+PR_NULLFUNC  . . . . . . . . . .  	L NEAR	0000		External
+PR_PRINTMENU . . . . . . . . . .  	L NEAR	0000		External
+
+SENTER . . . . . . . . . . . . .  	L BYTE	0012	DATA	Global
+START  . . . . . . . . . . . . .  	L NEAR	000F	CODE
+
+X  . . . . . . . . . . . . . . .  	L WORD	0010	DATA
+
+@CPU . . . . . . . . . . . . . .  	TEXT  0101h		
+@FILENAME  . . . . . . . . . . .  	TEXT  l6		
+@VERSION . . . . . . . . . . . .  	TEXT  510		
+
+
+    112 Source  Lines
+    112 Total   Lines
+     24 Symbols
+
+  46646 + 442391 Bytes symbol space free
+
+      0 Warning Errors
+      0 Severe  Errors

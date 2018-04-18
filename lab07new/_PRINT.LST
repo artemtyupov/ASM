@@ -1,0 +1,169 @@
+Microsoft (R) Macro Assembler Version 5.10                  4/9/18 11:10:49
+
+                                                             Page     1-1
+
+
+				PUBLIC	PR_PrintMenu
+				EXTRN	PR_NewLine:NEAR
+				
+ 0000				Data	SEGMENT	PUBLIC
+ 0000  0A 0D 20 20 20 4D		sMenu	DB	10,13,'   MENU', '$'
+       45 4E 55 24		
+ 000A  30 2E 20 50 65 63		sM0		DB	'0. Pechat menu
+				', '$'
+       68 61 74 20 6D 65	
+       6E 75 24			
+ 0019  31 2E 20 56 76 6F		sM1		DB	'1. Vvod celogo
+				', '$'
+       64 20 63 65 6C 6F	
+       67 6F 24			
+ 0028  32 2E 20 50 65 63		sM2		DB	'2. Pechat dvoi
+				chnogo bez znaka', '$'
+       68 61 74 20 64 76	
+       6F 69 63 68 6E 6F	
+       67 6F 20 62 65 7A	
+       20 7A 6E 61 6B 61	
+       24			
+ 0047  33 2E 20 50 65 63		sM3		DB	'3. Pechat dvoi
+				chnogo so znakom', '$'
+       68 61 74 20 64 76	
+       6F 69 63 68 6E 6F	
+       67 6F 20 73 6F 20	
+       7A 6E 61 6B 6F 6D	
+       24			
+ 0066  34 2E 20 50 65 63		sM4		DB	'4. Pechat desy
+				atichnogo bez znaka', '$'
+       68 61 74 20 64 65	
+       73 79 61 74 69 63	
+       68 6E 6F 67 6F 20	
+       62 65 7A 20 7A 6E	
+       61 6B 61 24		
+ 0088  35 2E 20 50 65 63		sM5		DB	'5. Pechat desy
+				atichnogo so znakom', '$'
+       68 61 74 20 64 65	
+       73 79 61 74 69 63	
+       68 6E 6F 67 6F 20	
+       73 6F 20 7A 6E 61	
+       6B 6F 6D 24		
+ 00AA  36 2E 20 50 65 63		sM6		DB	'6. Pechat shes
+				tnadcati- bez znaka', '$'
+       68 61 74 20 73 68	
+       65 73 74 6E 61 64	
+       63 61 74 69 2D 20	
+       62 65 7A 20 7A 6E	
+       61 6B 61 24		
+ 00CC  37 2E 20 50 65 63		sM7		DB	'7. Pechat shes
+				tnadcati- so znakom','$'
+       68 61 74 20 73 68	
+       65 73 74 6E 61 64	
+       63 61 74 69 2D 20	
+Microsoft (R) Macro Assembler Version 5.10                  4/9/18 11:10:49
+
+                                                             Page     1-2
+
+
+       73 6F 20 7A 6E 61	
+       6B 6F 6D 24		
+ 00EE  38 2E 20 56 79 68		sM8		DB	'8. Vyhod', '$'
+       6F 64 24			
+ 00F7				Data	ENDS
+				
+				
+				
+				
+				
+ 0000				Code	SEGMENT	PUBLIC
+					ASSUME CS:Code, DS:Data
+				
+ 0000				PR_PrintMenu	PROC	NEAR
+ 0000  50				PUSH	AX
+ 0001  52				PUSH	DX
+					
+ 0002  B4 09				MOV		AH,9
+					
+ 0004  8D 16 0000 R			LEA		DX,sMenu
+ 0008  CD 21				INT		21h
+ 000A  E8 0000 E			CALL	PR_NewLine
+ 000D  8D 16 000A R			LEA		DX,sM0
+ 0011  CD 21				INT		21h
+ 0013  E8 0000 E			CALL	PR_NewLine
+ 0016  8D 16 0019 R			LEA		DX,sM1
+ 001A  CD 21				INT		21h
+ 001C  E8 0000 E			CALL	PR_NewLine
+ 001F  8D 16 0028 R			LEA		DX,sM2
+ 0023  CD 21				INT		21h
+ 0025  E8 0000 E			CALL	PR_NewLine
+ 0028  8D 16 0047 R			LEA		DX,sM3
+ 002C  CD 21				INT		21h
+ 002E  E8 0000 E			CALL	PR_NewLine
+ 0031  8D 16 0066 R			LEA		DX,sM4
+ 0035  CD 21				INT		21h
+ 0037  E8 0000 E			CALL	PR_NewLine
+ 003A  8D 16 0088 R			LEA		DX,sM5
+ 003E  CD 21				INT		21h
+ 0040  E8 0000 E			CALL	PR_NewLine
+ 0043  8D 16 00AA R			LEA		DX,sM6
+ 0047  CD 21				INT		21h
+ 0049  E8 0000 E			CALL	PR_NewLine
+ 004C  8D 16 00CC R			LEA		DX,sM7
+ 0050  CD 21				INT		21h
+ 0052  E8 0000 E			CALL	PR_NewLine
+ 0055  8D 16 00EE R			LEA		DX,sM8
+ 0059  CD 21				INT		21h
+					
+ 005B  5A				POP		DX
+ 005C  58				POP		AX	
+ 005D  C3				RET
+ 005E				PR_PrintMenu	ENDP
+				
+Microsoft (R) Macro Assembler Version 5.10                  4/9/18 11:10:49
+
+                                                             Page     1-3
+
+
+ 005E				Code	ENDS
+				
+				END
+Microsoft (R) Macro Assembler Version 5.10                  4/9/18 11:10:49
+
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+CODE . . . . . . . . . . . . . .  	005E	PARA	PUBLIC	
+DATA . . . . . . . . . . . . . .  	00F7	PARA	PUBLIC	
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+PR_NEWLINE . . . . . . . . . . .  	L NEAR	0000		External
+PR_PRINTMENU . . . . . . . . . .  	N PROC	0000	CODE	Global	Length = 005E
+
+SM0  . . . . . . . . . . . . . .  	L BYTE	000A	DATA
+SM1  . . . . . . . . . . . . . .  	L BYTE	0019	DATA
+SM2  . . . . . . . . . . . . . .  	L BYTE	0028	DATA
+SM3  . . . . . . . . . . . . . .  	L BYTE	0047	DATA
+SM4  . . . . . . . . . . . . . .  	L BYTE	0066	DATA
+SM5  . . . . . . . . . . . . . .  	L BYTE	0088	DATA
+SM6  . . . . . . . . . . . . . .  	L BYTE	00AA	DATA
+SM7  . . . . . . . . . . . . . .  	L BYTE	00CC	DATA
+SM8  . . . . . . . . . . . . . .  	L BYTE	00EE	DATA
+SMENU  . . . . . . . . . . . . .  	L BYTE	0000	DATA
+
+@CPU . . . . . . . . . . . . . .  	TEXT  0101h		
+@FILENAME  . . . . . . . . . . .  	TEXT  _print		
+@VERSION . . . . . . . . . . . .  	TEXT  510		
+
+
+     67 Source  Lines
+     67 Total   Lines
+     23 Symbols
+
+  46722 + 444314 Bytes symbol space free
+
+      0 Warning Errors
+      0 Severe  Errors

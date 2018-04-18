@@ -1,0 +1,65 @@
+Microsoft (R) Macro Assembler Version 5.10                  4/1/18 19:35:53
+
+                                                             Page     1-1
+
+
+				PUBLIC output_X
+				EXTRN X: byte
+				
+ 0000				DS2 SEGMENT AT 0b800h
+ 0000					CA LABEL byte
+ 0144					ORG 80 * 2 * 2 + 2 * 2;задание текущей 
+				позиции
+ 0144					Z LABEL word;€чейка указанного типа в т
+				ек. позиции
+ 0144				DS2 ENDS
+				
+ 0000				CSEG SEGMENT PARA PUBLIC 'CODE'
+					assume CS:CSEG, ES:DS2
+ 0000				output_X proc near
+ 0000  B8 ---- R			mov ax, DS2
+ 0003  8E C0				mov es, ax
+ 0005  B4 19				mov ah, 25
+ 0007  A0 0000 E			mov al, X
+ 000A  26: A3 0144 R			mov z, ax
+ 000E  C3				ret
+ 000F				output_X endp
+ 000F				CSEG ENDS
+				END
+Microsoft (R) Macro Assembler Version 5.10                  4/1/18 19:35:53
+
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+CSEG . . . . . . . . . . . . . .  	000F	PARA	PUBLIC	'CODE'
+DS2  . . . . . . . . . . . . . .  	0144	AT	B800	
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+CA . . . . . . . . . . . . . . .  	L BYTE	0000	DS2
+
+OUTPUT_X . . . . . . . . . . . .  	N PROC	0000	CSEG	Global	Length = 000F
+
+X  . . . . . . . . . . . . . . .  	V BYTE	0000		External
+
+Z  . . . . . . . . . . . . . . .  	L WORD	0144	DS2
+
+@CPU . . . . . . . . . . . . . .  	TEXT  0101h		
+@FILENAME  . . . . . . . . . . .  	TEXT  lr05_1_2		
+@VERSION . . . . . . . . . . . .  	TEXT  510		
+
+
+     21 Source  Lines
+     21 Total   Lines
+     16 Symbols
+
+  47140 + 447000 Bytes symbol space free
+
+      0 Warning Errors
+      0 Severe  Errors

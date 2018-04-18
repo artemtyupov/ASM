@@ -1,0 +1,47 @@
+Microsoft (R) Macro Assembler Version 5.10                  4/1/18 19:40:33
+
+                                                             Page     1-1
+
+
+ 0000				STK SEGMENT para STACK 'STACK'
+ 0000  0064[				db 100 dup(0)
+	   00			
+			 ]	
+				
+ 0064				STK ENDS
+				
+ 0000				SD1 SEGMENT para common 'DATA'
+ 0000  3444				W dw 3444h
+ 0002				SD1 ENDS
+				END
+Microsoft (R) Macro Assembler Version 5.10                  4/1/18 19:40:33
+
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+SD1  . . . . . . . . . . . . . .  	0002	PARA	COMMON	'DATA'
+STK  . . . . . . . . . . . . . .  	0064	PARA	STACK	'STACK'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+W  . . . . . . . . . . . . . . .  	L WORD	0000	SD1
+
+@CPU . . . . . . . . . . . . . .  	TEXT  0101h		
+@FILENAME  . . . . . . . . . . .  	TEXT  lr05_2_1		
+@VERSION . . . . . . . . . . . .  	TEXT  510		
+
+
+      8 Source  Lines
+      8 Total   Lines
+     14 Symbols
+
+  47252 + 446888 Bytes symbol space free
+
+      0 Warning Errors
+      0 Severe  Errors

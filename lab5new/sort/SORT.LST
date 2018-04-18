@@ -1,0 +1,115 @@
+Microsoft (R) Macro Assembler Version 5.10                  4/1/18 19:50:27
+
+                                                             Page     1-1
+
+
+ 0000				SSEG	SEGMENT PARA STACK 'STACK'
+ 0000  0200[				DB	200h dup (?)
+	   ??			
+			 ]	
+				
+ 0200				SSEG	ENDS
+				
+ 0000				DSEG	SEGMENT PARA PUBLIC 'DATA'
+ 0000  0007			N	DW	7
+ 0002  09 03 07 06 05 08	X	DB	9, 3, 7, 6, 5, 8, 1
+       01			
+ 0009				DSEG	ENDS
+				
+ 0000				CSEG	SEGMENT PARA 'CODE'
+				ASSUME	CS:CSEG, DS:DSEG, SS:SSEG
+ 0000				START:
+ 0000  B8 ---- R			MOV	AX, DSEG
+ 0003  8E D8				MOV	DS, AX
+				
+ 0005  BB 0002 R			MOV	BX, OFFSET X  ; Massiv
+ 0008  8B 0E 0000 R			MOV	CX, N  ; max I
+ 000C  49				DEC CX
+ 000D  74 1F				JZ PRINT
+					
+ 000F				M1:
+ 000F  51				PUSH CX
+ 0010  8B D1				MOV DX, CX
+ 0012  B9 0000				MOV CX, 0
+ 0015  03 CA				ADD CX, DX
+					
+ 0017  BE 0000				MOV SI, 0
+ 001A				M2:
+ 001A  8A 00				MOV	AL, [BX][SI]
+ 001C  38 40 01				CMP [BX][SI+1], AL
+ 001F  73 07				JNB M3
+ 0021  8A 00				MOV AL, [BX][SI]
+ 0023  86 40 01			 	XCHG AL, [BX][SI+1]
+ 0026  88 00				MOV [BX][SI], AL
+				
+ 0028				M3:
+ 0028  46				INC SI
+ 0029  E2 EF				LOOP M2
+ 002B  59				POP CX
+ 002C  E2 E1				LOOP M1
+				
+ 002E				PRINT:
+ 002E  8B 0E 0000 R			MOV CX, N
+ 0032  BE 0000				MOV SI, 0
+ 0035				PRINT1:
+ 0035  B4 02				MOV AH, 02h
+ 0037  8B 10				MOV DX, [BX][SI]
+ 0039  83 C2 30				ADD DX, '0'
+ 003C  CD 21				INT 21h
+ 003E  46				INC SI
+Microsoft (R) Macro Assembler Version 5.10                  4/1/18 19:50:27
+
+                                                             Page     1-2
+
+
+ 003F  E2 F4				LOOP PRINT1
+				
+ 0041				STOP:
+ 0041  B4 4C				MOV	AH, 4Ch
+ 0043  CD 21				INT	21h
+ 0045				CSEG	ENDS
+					END	START
+Microsoft (R) Macro Assembler Version 5.10                  4/1/18 19:50:27
+
+                                                             Symbols-1
+
+
+Segments and Groups:
+
+                N a m e         	Length	 Align	Combine Class
+
+CSEG . . . . . . . . . . . . . .  	0045	PARA	NONE	'CODE'
+DSEG . . . . . . . . . . . . . .  	0009	PARA	PUBLIC	'DATA'
+SSEG . . . . . . . . . . . . . .  	0200	PARA	STACK	'STACK'
+
+Symbols:            
+
+                N a m e         	Type	 Value	 Attr
+
+M1 . . . . . . . . . . . . . . .  	L NEAR	000F	CSEG
+M2 . . . . . . . . . . . . . . .  	L NEAR	001A	CSEG
+M3 . . . . . . . . . . . . . . .  	L NEAR	0028	CSEG
+
+N  . . . . . . . . . . . . . . .  	L WORD	0000	DSEG
+
+PRINT  . . . . . . . . . . . . .  	L NEAR	002E	CSEG
+PRINT1 . . . . . . . . . . . . .  	L NEAR	0035	CSEG
+
+START  . . . . . . . . . . . . .  	L NEAR	0000	CSEG
+STOP . . . . . . . . . . . . . .  	L NEAR	0041	CSEG
+
+X  . . . . . . . . . . . . . . .  	L BYTE	0002	DSEG
+
+@CPU . . . . . . . . . . . . . .  	TEXT  0101h		
+@FILENAME  . . . . . . . . . . .  	TEXT  sort		
+@VERSION . . . . . . . . . . . .  	TEXT  510		
+
+
+     57 Source  Lines
+     57 Total   Lines
+     24 Symbols
+
+  47012 + 445064 Bytes symbol space free
+
+      0 Warning Errors
+      0 Severe  Errors
